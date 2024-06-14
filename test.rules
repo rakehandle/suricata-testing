@@ -1,0 +1,151 @@
+# IP
+alert ip any any -> any any (msg:"ip keywords ttl"; ttl:10; sid:1;)
+alert ip any any -> any any (msg:"ip keywords ipopts-rr"; ipopts:rr; sid:2;)
+alert ip any any -> any any (msg:"ip keywords ipopts-eol"; ipopts:eol; sid:3;)
+alert ip any any -> any any (msg:"ip keywords ipopts-nop"; ipopts:nop; sid:4;)
+alert ip any any -> any any (msg:"ip keywords ipopts-ts"; ipopts:ts; sid:5;)
+alert ip any any -> any any (msg:"ip keywords ipopts-sec"; ipopts:sec; sid:6;)
+alert ip any any -> any any (msg:"ip keywords ipopts-esec"; ipopts:esec; sid:7;)
+alert ip any any -> any any (msg:"ip keywords ipopts-lsrr"; ipopts:lsrr; sid:8;)
+alert ip any any -> any any (msg:"ip keywords ipopts-ssrr"; ipopts:ssrr; sid:9;)
+alert ip any any -> any any (msg:"ip keywords ipopts-satid"; ipopts:satid; sid:10;)
+alert ip any any -> any any (msg:"ip keywords ipopts-any"; ipopts:any; sid:11;)
+alert ip any any -> any any (msg:"ip keywords same-ip"; sameip; sid:12;)
+alert ip any any -> any any (msg:"ip keywords ip-proto"; ip_proto:1; sid:13;)
+# alert ip any any -> any any (msg:"ip keywords ipv4.hdr"; ipv4.hdr; content:"|06|"; offset:9; depth:1; sid:14;)
+alert ip any any -> any any (msg:"ip keywords ipv6.hdr"; ipv6.hdr; content:"|06|"; offset:6; depth:1; sid:15;)
+alert ip any any -> any any (msg:"ip keywords id"; id:5; sid:16;)
+alert ip any any -> any any (msg:"ip keywords fragbits-fragoffset"; fragbits:M; fragoffset:>0; classtype:bad-unknown; sid:17;)
+alert ip any any -> any any (msg:"ip keywords tos"; tos:8; sid:18;)
+
+# TCP
+alert tcp any any -> any any (msg:"tcp keywords tcp-flags"; tcp.flags:FA; sid:19;)
+alert tcp any any -> any any (msg:"tcp keywords tcp-seq"; tcp.seq:1234; sid:20;)
+alert tcp any any -> any any (msg:"tcp keywords tcp-ack"; tcp.ack:5678; sid:21;)
+alert tcp any any -> any any (msg:"tcp keywords tcp-window"; tcp.window:1024; sid:22;)
+alert tcp any any -> any any (msg:"tcp keywords tcp-mss"; tcp.mss:1460; sid:23;)
+alert tcp any any -> any any (msg:"tcp keywords tcp-hdr"; tcp.hdr; content:"|02 04|"; offset:20; byte_test:2,<,536,0,big,relative; sid:24;)
+
+# UDP
+alert udp any any -> any any (msg:"udp keywords udp-hdr"; udp.hdr; content:"|00 08|"; offset:4; depth:2; sid:25;)
+
+# ICMP
+alert icmp any any -> any any (msg:"icmp keywords icmp-type"; itype:8; sid:26;)
+alert icmp any any -> any any (msg:"icmp keywords icmp-code"; icode:0; sid:27;)
+alert icmp any any -> any any (msg:"icmp keywords icmp-id"; icmp_id:2; sid:28;)
+alert icmp any any -> any any (msg:"icmp keywords icmp-seq"; icmp_seq:4; sid:29;)
+# alert icmp any any -> any any (msg:"icmp keywords icmpv4-hdr"; icmpv4.hdr; sid:30;)
+# alert icmp any any -> any any (msg:"icmp keywords icmpv6-hdr"; icmpv6.hdr; sid:31;)
+alert icmp any any -> any any (msg:"icmp keywords icmpv6-mtu"; icmpv6.mtu:1500; sid:32;)
+
+# HTTP
+alert http any any -> any any (msg:"http keywords http-file-name"; file.name; content:"Moved"; sid:33;)
+alert http any any -> any any (msg:"http keywords http-accept"; http.accept; content:"*/*"; sid:34;)
+alert http any any -> any any (msg:"http keywords http-host"; http.host; content:"detectportal.firefox.com"; sid:35;)
+alert http any any -> any any (msg:"http keywords http-method"; http.method; content:"GET"; sid:36;)
+alert http any any -> any any (msg:"http keywords http-uri"; http.uri; content:"/canonical"; sid:37;)
+alert http any any -> any any (msg:"http keywords http-accept-enc"; http.accept_enc; content:"gzip"; sid:38;)
+alert http any any -> any any (msg:"http keywords http-accept-lang"; http.accept_lang; content:"en-US"; sid:39;)
+alert http any any -> any any (msg:"http keywords http-host-raw"; http.host.raw; content:"detect"; sid:40;)
+alert http any any -> any any (msg:"http keywords http-referer"; http.referer; content:"vulnweb"; sid:41;)
+alert http any any -> any any (msg:"http keywords http-request-body"; http.request_body; content:"key"; sid:42;)
+alert http any any -> any any (msg:"http keywords http-request-header"; http.request_header; content:"Host: detect"; sid:43;)
+alert http any any -> any any (msg:"http keywords http-request-line"; http.request_line; content:"HTTP/1.1"; sid:44;)
+alert http any any -> any any (msg:"http keywords http-uri-raw"; http.uri.raw; content:"canonical"; sid:45;)
+alert http any any -> any any (msg:"http keywords http-user-agent"; http.user_agent; content:"Mozilla"; sid:46;)
+alert http any any -> any any (msg:"http keywords urilen"; urilen:>2; sid:47;)
+alert http any any -> any any (msg:"http keywords http-location"; http.location; content:"acunetix"; sid:48;)
+alert http any any -> any any (msg:"http keywords http-response-body"; http.response_body; content:"http-equiv"; sid:49;)
+alert http any any -> any any (msg:"http keywords http-response-header"; http.response_header; content:"Age: 54700"; sid:50;)
+alert http any any -> any any (msg:"http keywords http-response-line"; http.response_line; content:"HTTP/1.1 200 OK"; sid:51;)
+alert http any any -> any any (msg:"http keywords http-server"; http.server; content:"nginx"; sid:52;)
+alert http any any -> any any (msg:"http keywords http-stat-code"; http.stat_code; content:"200"; sid:53;)
+alert http any any -> any any (msg:"http keywords http-stat-msg"; http.stat_msg; content:"OK"; sid:54;)
+alert http any any -> any any (msg:"http keywords file-data"; file.data; content:"DOCTYPE html"; sid:55;)
+alert http any any -> any any (msg:"http keywords http-content-len"; http.content_len; content:"90"; sid:56;)
+alert http any any -> any any (msg:"http keywords http-content-type"; http.content_type; content:"text/html"; sid:57;)
+alert http any any -> any any (msg:"http keywords http-cookie"; http.cookie; content:"name=value"; sid:58;)
+alert http any any -> any any (msg:"http keywords http-header"; http.header; content:"Content-Type: text/html"; sid:59;)
+alert http any any -> any any (msg:"http keywords http-header-raw"; http.header.raw; content:"Content-Type: text/html"; flow:to_client; sid:60;)
+alert http any any -> any any (msg:"http keywords http-header-names"; http.header_names; content:"Content-Type"; sid:61;)
+alert http any any -> any any (msg:"http keywords http-protocol"; http.protocol; content:"HTTP/1.1"; sid:62;)
+alert http any any -> any any (msg:"http keywords http-start"; http.start; content:"HTTP/1.1"; sid:63;)
+
+# HTTP2
+alert http2 any any -> any any (msg:"http2 keywords http2-frametype"; http2.frametype:SETTINGS; sid:64;)
+alert http2 any any -> any any (msg:"http2 keywords http2-errorcode"; http2.errorcode:NO_ERROR; sid:65;)
+alert http2 any any -> any any (msg:"http2 keywords http2-priority"; http2.priority:0; sid:66;)
+alert http2 any any -> any any (msg:"http2 keywords http2-window"; http2.window:<100000; sid:67;)
+alert http2 any any -> any any (msg:"http2 keywords http2-size-update"; http2.size_update:<1023; sid:68;)
+alert http2 any any -> any any (msg:"http2 keywords http2-settings"; http2.settings:SETTINGS_ENABLE_PUSH=0; sid:69;)
+alert http2 any any -> any any (msg:"http2 keywords http2-header-name"; http2.header_name; content:"x-backend-header-rtt"; sid:70;)
+
+# DNS
+alert dns any any -> any any (msg:"dns keywords dns-opcode"; dns.opcode:0; sid:71;)
+alert dns any any -> any any (msg:"dns keywords dns-query"; dns.query; content:"linkedin.com"; sid:72;)
+
+# FTP
+alert ftp-data any any -> any any (msg:"ftp keywords ftp-data-command"; ftpdata_command:stor; sid:73;)
+alert ftp any any -> any any (msg:"ftp keywords ftp-bounce"; ftpbounce; sid:74;)
+alert ftp-data any any -> any any (msg:"ftp keywords file-name"; file.name; content:"example.txt"; sid:75;)
+
+# TLS
+alert tls any any -> any any (msg:"tls keywords tls-cert-subject"; tls.cert_subject; content:"pubmatic.com"; sid:76;)
+alert tls any any -> any any (msg:"tls keywords tls-cert-issuer"; tls.cert_issuer; content:"DigiCert"; sid:77;)
+alert tls any any -> any any (msg:"tls keywords tls-cert-serial"; tls.cert_serial; content:"|0e|"; sid:78;)
+alert tls any any -> any any (msg:"tls keywords tls-cert-fingerprint"; tls.cert_fingerprint; content:"4a:a3:66:76:82:cb:6b:23:bb:c3:58:47:23:a4:63:a7:78:a4:a1:18"; sid:79;)
+alert tls any any -> any any (msg:"tls keywords tls-sni"; tls.sni; content:"linkedin"; sid:80;)
+alert tls any any -> any any (msg:"tls keywords tls-version"; tls.version:1.2; sid:81;)
+
+# SMB
+alert smb any any -> any any (msg:"smb keywords smb-name-pipe"; smb.named_pipe; content:"srvsvc"; sid:82;)
+alert smb any any -> any any (msg:"smb keywords smb-share"; smb.share; content:"IPC$"; sid:83;)
+alert smb any any -> any any (msg:"smb keywords smb-ntlmssp-user"; smb.ntlmssp_user; content:"user"; sid:84;)
+alert smb any any -> any any (msg:"smb keywords smb-ntlmssp-domain"; smb.ntlmssp_domain; content:"domain"; sid:85;)
+alert smb any any -> any any (msg:"smb keywords file-name"; file.name; content:"example.txt"; sid:86;)
+
+# DCERPC
+alert dcerpc any any -> any any (msg:"dcerpc keywords dce-iface"; dcerpc.iface:e1af8308-5d1f-11c9-91a4-08002b14a0fa; sid:87;)
+alert dcerpc any any -> any any (msg:"dcerpc keywords dce-opnum"; dcerpc.opnum:3; sid:88;)
+alert dcerpc any any -> any any (msg:"dcerpc keywords dce-stub-data"; dcerpc.stub_data; content:"#Eg"; sid:89;)
+
+# DHCP
+alert dhcp any any -> any any (msg:"dhcp keywords dhcp-lease-time"; dhcp.leasetime:<86400; sid:90;)
+alert dhcp any any -> any any (msg:"dhcp keywords dhcp-rebinding-time"; dhcp.rebinding_time:43200; sid:91;)
+alert dhcp any any -> any any (msg:"dhcp keywords dhcp-renewal-time"; dhcp.renewal_time:21600; sid:92;)
+
+# SSH
+alert ssh any any -> any any (msg:"ssh keywords ssh-protocol"; ssh.proto; content:"2.0"; sid:93;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-software"; ssh.software; content:"OpenSSH"; sid:94;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-proto"; ssh.proto; content:"2.0"; sid:95;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-softwareversion"; ssh.softwareversion:"OpenSSH"; sid:96;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh"; ssh.hassh; content:"ec7378c1a92f5a8dde7e8b7a1ddf33d1"; sid:97;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-string"; ssh.hassh.string; content:"none,zlib@openssh.com,zlib"; sid:98;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-server";  ssh.hassh.server; content:"b12d2871a1189eff20364cf5333619ee";sid:99;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-server-string"; ssh.hassh.server.string; content:"umac-64-etm@openssh.com,umac-128-etm@openssh.com"; sid:100;)
+
+# SMTP
+alert smtp any any -> any any (msg:"smtp keywords file-name"; file.name; content:"example.txt"; sid:101;)
+
+# NFS
+alert nfs any any -> any any (msg:"nfs keywords file-name"; file.name; content:"example.txt"; sid:102;)
+
+# IKE
+alert ike any any -> any any (msg:"ike keywords ike-init-spi"; ike.init_spi; content:"18fe9b731f9f8034"; sid:103;)
+alert ike any any -> any any (msg:"ike keywords ike-resp-spi"; ike.resp_spi; content:"a00b8ef0902bb8ec"; sid:104;)
+alert ike any any -> any any (msg:"ike keywords ike-chosen-sa-attribute"; ike.chosen_sa_attribute:alg_hash=2; sid:105;)
+alert ike any any -> any any (msg:"ike keywords ike-exchange-type"; ike.exchtype:>=2; sid:106;)
+alert ike any any -> any any (msg:"ike keywords ike-vendor"; ike.vendor; content:"4a131c81070358455c5728f20e95452f"; sid:107;)
+alert ike any any -> any any (msg:"ike keywords ike-key-exchange-payload"; ike.key_exchange_payload; content:"|6d026d5616c45be05e5b898411e9|"; sid:108;)
+alert ike any any -> any any (msg:"ike keywords ike-key-exchange-payload-len"; ike.key_exchange_payload_length:<2; sid:109;)
+alert ike any any -> any any (msg:"ike keywords ike-nonce-payload"; ike.nonce_payload; content:"|6d026d5616c45be05e5b898411e9|"; sid:110;)
+alert ike any any -> any any (msg:"ike keywords ike-nonce-payload-len"; ike.nonce_payload_length:>1; sid:111;)
+
+# KRB5
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-msg-type"; krb5_msg_type:10; sid:112;)
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-cname"; krb5_cname; content:"user@EXAMPLE.COM"; sid:113;)
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-sname"; krb5_sname; content:"krbtgt/EXAMPLE.COM@EXAMPLE.COM"; sid:114;)
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-err-code"; krb5_err_code:0; sid:115;)
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-weak-encryption"; app-layer-event:krb5.weak_encryption; sid:116;)
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-malformed-data"; app-layer-event:krb5.malformed_data; sid:117;)
+alert krb5 any any -> any any (msg:"krb5 keywords krb5-ticket-encryption"; krb5.ticket_encryption:weak; sid:118;)
