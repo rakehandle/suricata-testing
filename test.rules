@@ -99,10 +99,10 @@ alert tls any any -> any any (msg:"tls keywords tls-version"; tls.version:1.2; s
 
 # SMB
 alert smb any any -> any any (msg:"smb keywords smb-name-pipe"; smb.named_pipe; content:"srvsvc"; sid:82;)
-alert smb any any -> any any (msg:"smb keywords smb-share"; smb.share; content:"IPC$"; sid:83;)
-alert smb any any -> any any (msg:"smb keywords smb-ntlmssp-user"; smb.ntlmssp_user; content:"user"; sid:84;)
-alert smb any any -> any any (msg:"smb keywords smb-ntlmssp-domain"; smb.ntlmssp_domain; content:"domain"; sid:85;)
-alert smb any any -> any any (msg:"smb keywords file-name"; file.name; content:"example.txt"; sid:86;)
+alert smb any any -> any any (msg:"smb keywords smb-share"; smb.share; content:"public"; sid:83;)
+alert smb any any -> any any (msg:"smb keywords smb-ntlmssp-user"; smb.ntlmssp_user; content:"admin"; sid:84;)
+alert smb any any -> any any (msg:"smb keywords smb-ntlmssp-domain"; smb.ntlmssp_domain; content:"VNET3"; sid:85;)
+alert smb any any -> any any (msg:"smb keywords file-name"; file.name; content:"torture"; sid:86;)
 
 # DCERPC
 alert dcerpc any any -> any any (msg:"dcerpc keywords dce-iface"; dcerpc.iface:e1af8308-5d1f-11c9-91a4-08002b14a0fa; sid:87;)
@@ -110,25 +110,23 @@ alert dcerpc any any -> any any (msg:"dcerpc keywords dce-opnum"; dcerpc.opnum:3
 alert dcerpc any any -> any any (msg:"dcerpc keywords dce-stub-data"; dcerpc.stub_data; content:"#Eg"; sid:89;)
 
 # DHCP
-alert dhcp any any -> any any (msg:"dhcp keywords dhcp-lease-time"; dhcp.leasetime:<86400; sid:90;)
-alert dhcp any any -> any any (msg:"dhcp keywords dhcp-rebinding-time"; dhcp.rebinding_time:43200; sid:91;)
-alert dhcp any any -> any any (msg:"dhcp keywords dhcp-renewal-time"; dhcp.renewal_time:21600; sid:92;)
+alert dhcp any any -> any any (msg:"dhcp keywords dhcp-lease-time"; dhcp.leasetime:3600; sid:90;)
+alert dhcp any any -> any any (msg:"dhcp keywords dhcp-rebinding-time"; dhcp.rebinding_time:3150; sid:91;)
+alert dhcp any any -> any any (msg:"dhcp keywords dhcp-renewal-time"; dhcp.renewal_time:1800; sid:92;)
 
 # SSH
-alert ssh any any -> any any (msg:"ssh keywords ssh-protocol"; ssh.proto; content:"2.0"; sid:93;)
-alert ssh any any -> any any (msg:"ssh keywords ssh-software"; ssh.software; content:"OpenSSH"; sid:94;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-software"; ssh.software; content:"Cisco"; sid:94;)
 alert ssh any any -> any any (msg:"ssh keywords ssh-proto"; ssh.proto; content:"2.0"; sid:95;)
-alert ssh any any -> any any (msg:"ssh keywords ssh-softwareversion"; ssh.softwareversion:"OpenSSH"; sid:96;)
-alert ssh any any -> any any (msg:"ssh keywords ssh-hassh"; ssh.hassh; content:"ec7378c1a92f5a8dde7e8b7a1ddf33d1"; sid:97;)
-alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-string"; ssh.hassh.string; content:"none,zlib@openssh.com,zlib"; sid:98;)
-alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-server";  ssh.hassh.server; content:"b12d2871a1189eff20364cf5333619ee";sid:99;)
-alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-server-string"; ssh.hassh.server.string; content:"umac-64-etm@openssh.com,umac-128-etm@openssh.com"; sid:100;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh"; ssh.hassh; content:"3cc67862bceac0f334c62ad1b76895b4"; sid:97;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-string"; ssh.hassh.string; content:"hmac"; sid:98;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-server";  ssh.hassh.server; content:"3cc67862bceac0f334c62ad1b76895b4";sid:99;)
+alert ssh any any -> any any (msg:"ssh keywords ssh-hassh-server-string"; ssh.hassh.server.string; content:"aes"; sid:100;)
 
 # SMTP
 alert smtp any any -> any any (msg:"smtp keywords file-name"; file.name; content:"example.txt"; sid:101;)
 
 # NFS
-alert nfs any any -> any any (msg:"nfs keywords file-name"; file.name; content:"example.txt"; sid:102;)
+alert nfs any any -> any any (msg:"nfs keywords file-name"; file.name; content:"bln"; sid:102;)
 
 # IKE
 alert ike any any -> any any (msg:"ike keywords ike-init-spi"; ike.init_spi; content:"18fe9b731f9f8034"; sid:103;)
